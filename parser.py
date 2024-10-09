@@ -7,6 +7,7 @@ precedence = (
     ('left', 'SUMA', 'RESTA'),
     ('left', 'MULTIPLICACION', 'DIVISION'),
     ('left', 'PARENTESIS_I', 'PARENTESIS_D'),
+    ('left', 'CORCHETE_I', 'CORCHETE_D'),
 )
 def p_expression_plus(p):
     'expression : expression SUMA term'
@@ -42,7 +43,8 @@ def p_factor_num(p):
     p[0] = p[1]
 
 def p_factor_expr(p):
-    'factor : PARENTESIS_I expression PARENTESIS_D'
+    '''factor : PARENTESIS_I expression PARENTESIS_D
+              | CORCHETE_I expression CORCHETE_D'''
     p[0] = p[2]
 
 # Error rule for syntax errors

@@ -23,10 +23,13 @@ Rule 6     term -> term DIVISION factor
 Rule 7     term -> factor
 Rule 8     factor -> NUMERO
 Rule 9     factor -> PARENTESIS_I expression PARENTESIS_D
+Rule 10    factor -> CORCHETE_I expression CORCHETE_D
 
 Terminals, with rules where they appear
 
 ASIGNACION           : 
+CORCHETE_D           : 10
+CORCHETE_I           : 10
 DIVISION             : 6
 IMPRIMIR             : 
 MIENTRAS             : 
@@ -45,7 +48,7 @@ error                :
 
 Nonterminals, with rules where they appear
 
-expression           : 1 2 2 3 9 0
+expression           : 1 2 2 3 9 10 0
 factor               : 5 6 7
 term                 : 1 4 5 6
 
@@ -63,10 +66,12 @@ state 0
     (7) term -> . factor
     (8) factor -> . NUMERO
     (9) factor -> . PARENTESIS_I expression PARENTESIS_D
+    (10) factor -> . CORCHETE_I expression CORCHETE_D
 
     RESTA           shift and go to state 3
     NUMERO          shift and go to state 5
     PARENTESIS_I    shift and go to state 6
+    CORCHETE_I      shift and go to state 7
 
     expression                     shift and go to state 1
     term                           shift and go to state 2
@@ -78,8 +83,8 @@ state 1
     (1) expression -> expression . SUMA term
     (2) expression -> expression . RESTA expression
 
-    SUMA            shift and go to state 7
-    RESTA           shift and go to state 8
+    SUMA            shift and go to state 8
+    RESTA           shift and go to state 9
 
 
 state 2
@@ -92,8 +97,9 @@ state 2
     RESTA           reduce using rule 4 (expression -> term .)
     $end            reduce using rule 4 (expression -> term .)
     PARENTESIS_D    reduce using rule 4 (expression -> term .)
-    MULTIPLICACION  shift and go to state 9
-    DIVISION        shift and go to state 10
+    CORCHETE_D      reduce using rule 4 (expression -> term .)
+    MULTIPLICACION  shift and go to state 10
+    DIVISION        shift and go to state 11
 
 
 state 3
@@ -108,12 +114,14 @@ state 3
     (7) term -> . factor
     (8) factor -> . NUMERO
     (9) factor -> . PARENTESIS_I expression PARENTESIS_D
+    (10) factor -> . CORCHETE_I expression CORCHETE_D
 
     RESTA           shift and go to state 3
     NUMERO          shift and go to state 5
     PARENTESIS_I    shift and go to state 6
+    CORCHETE_I      shift and go to state 7
 
-    expression                     shift and go to state 11
+    expression                     shift and go to state 12
     term                           shift and go to state 2
     factor                         shift and go to state 4
 
@@ -127,6 +135,7 @@ state 4
     RESTA           reduce using rule 7 (term -> factor .)
     $end            reduce using rule 7 (term -> factor .)
     PARENTESIS_D    reduce using rule 7 (term -> factor .)
+    CORCHETE_D      reduce using rule 7 (term -> factor .)
 
 
 state 5
@@ -139,6 +148,7 @@ state 5
     RESTA           reduce using rule 8 (factor -> NUMERO .)
     $end            reduce using rule 8 (factor -> NUMERO .)
     PARENTESIS_D    reduce using rule 8 (factor -> NUMERO .)
+    CORCHETE_D      reduce using rule 8 (factor -> NUMERO .)
 
 
 state 6
@@ -153,16 +163,41 @@ state 6
     (7) term -> . factor
     (8) factor -> . NUMERO
     (9) factor -> . PARENTESIS_I expression PARENTESIS_D
+    (10) factor -> . CORCHETE_I expression CORCHETE_D
 
     RESTA           shift and go to state 3
     NUMERO          shift and go to state 5
     PARENTESIS_I    shift and go to state 6
+    CORCHETE_I      shift and go to state 7
 
-    expression                     shift and go to state 12
+    expression                     shift and go to state 13
     term                           shift and go to state 2
     factor                         shift and go to state 4
 
 state 7
+
+    (10) factor -> CORCHETE_I . expression CORCHETE_D
+    (1) expression -> . expression SUMA term
+    (2) expression -> . expression RESTA expression
+    (3) expression -> . RESTA expression
+    (4) expression -> . term
+    (5) term -> . term MULTIPLICACION factor
+    (6) term -> . term DIVISION factor
+    (7) term -> . factor
+    (8) factor -> . NUMERO
+    (9) factor -> . PARENTESIS_I expression PARENTESIS_D
+    (10) factor -> . CORCHETE_I expression CORCHETE_D
+
+    RESTA           shift and go to state 3
+    NUMERO          shift and go to state 5
+    PARENTESIS_I    shift and go to state 6
+    CORCHETE_I      shift and go to state 7
+
+    expression                     shift and go to state 14
+    term                           shift and go to state 2
+    factor                         shift and go to state 4
+
+state 8
 
     (1) expression -> expression SUMA . term
     (5) term -> . term MULTIPLICACION factor
@@ -170,14 +205,16 @@ state 7
     (7) term -> . factor
     (8) factor -> . NUMERO
     (9) factor -> . PARENTESIS_I expression PARENTESIS_D
+    (10) factor -> . CORCHETE_I expression CORCHETE_D
 
     NUMERO          shift and go to state 5
     PARENTESIS_I    shift and go to state 6
+    CORCHETE_I      shift and go to state 7
 
-    term                           shift and go to state 13
+    term                           shift and go to state 15
     factor                         shift and go to state 4
 
-state 8
+state 9
 
     (2) expression -> expression RESTA . expression
     (1) expression -> . expression SUMA term
@@ -189,38 +226,44 @@ state 8
     (7) term -> . factor
     (8) factor -> . NUMERO
     (9) factor -> . PARENTESIS_I expression PARENTESIS_D
+    (10) factor -> . CORCHETE_I expression CORCHETE_D
 
     RESTA           shift and go to state 3
     NUMERO          shift and go to state 5
     PARENTESIS_I    shift and go to state 6
+    CORCHETE_I      shift and go to state 7
 
-    expression                     shift and go to state 14
+    expression                     shift and go to state 16
     term                           shift and go to state 2
     factor                         shift and go to state 4
 
-state 9
+state 10
 
     (5) term -> term MULTIPLICACION . factor
     (8) factor -> . NUMERO
     (9) factor -> . PARENTESIS_I expression PARENTESIS_D
+    (10) factor -> . CORCHETE_I expression CORCHETE_D
 
     NUMERO          shift and go to state 5
     PARENTESIS_I    shift and go to state 6
+    CORCHETE_I      shift and go to state 7
 
-    factor                         shift and go to state 15
+    factor                         shift and go to state 17
 
-state 10
+state 11
 
     (6) term -> term DIVISION . factor
     (8) factor -> . NUMERO
     (9) factor -> . PARENTESIS_I expression PARENTESIS_D
+    (10) factor -> . CORCHETE_I expression CORCHETE_D
 
     NUMERO          shift and go to state 5
     PARENTESIS_I    shift and go to state 6
+    CORCHETE_I      shift and go to state 7
 
-    factor                         shift and go to state 16
+    factor                         shift and go to state 18
 
-state 11
+state 12
 
     (3) expression -> RESTA expression .
     (1) expression -> expression . SUMA term
@@ -230,23 +273,35 @@ state 11
     RESTA           reduce using rule 3 (expression -> RESTA expression .)
     $end            reduce using rule 3 (expression -> RESTA expression .)
     PARENTESIS_D    reduce using rule 3 (expression -> RESTA expression .)
+    CORCHETE_D      reduce using rule 3 (expression -> RESTA expression .)
 
-  ! SUMA            [ shift and go to state 7 ]
-  ! RESTA           [ shift and go to state 8 ]
+  ! SUMA            [ shift and go to state 8 ]
+  ! RESTA           [ shift and go to state 9 ]
 
 
-state 12
+state 13
 
     (9) factor -> PARENTESIS_I expression . PARENTESIS_D
     (1) expression -> expression . SUMA term
     (2) expression -> expression . RESTA expression
 
-    PARENTESIS_D    shift and go to state 17
-    SUMA            shift and go to state 7
-    RESTA           shift and go to state 8
+    PARENTESIS_D    shift and go to state 19
+    SUMA            shift and go to state 8
+    RESTA           shift and go to state 9
 
 
-state 13
+state 14
+
+    (10) factor -> CORCHETE_I expression . CORCHETE_D
+    (1) expression -> expression . SUMA term
+    (2) expression -> expression . RESTA expression
+
+    CORCHETE_D      shift and go to state 20
+    SUMA            shift and go to state 8
+    RESTA           shift and go to state 9
+
+
+state 15
 
     (1) expression -> expression SUMA term .
     (5) term -> term . MULTIPLICACION factor
@@ -256,11 +311,12 @@ state 13
     RESTA           reduce using rule 1 (expression -> expression SUMA term .)
     $end            reduce using rule 1 (expression -> expression SUMA term .)
     PARENTESIS_D    reduce using rule 1 (expression -> expression SUMA term .)
-    MULTIPLICACION  shift and go to state 9
-    DIVISION        shift and go to state 10
+    CORCHETE_D      reduce using rule 1 (expression -> expression SUMA term .)
+    MULTIPLICACION  shift and go to state 10
+    DIVISION        shift and go to state 11
 
 
-state 14
+state 16
 
     (2) expression -> expression RESTA expression .
     (1) expression -> expression . SUMA term
@@ -270,12 +326,13 @@ state 14
     RESTA           reduce using rule 2 (expression -> expression RESTA expression .)
     $end            reduce using rule 2 (expression -> expression RESTA expression .)
     PARENTESIS_D    reduce using rule 2 (expression -> expression RESTA expression .)
+    CORCHETE_D      reduce using rule 2 (expression -> expression RESTA expression .)
 
-  ! SUMA            [ shift and go to state 7 ]
-  ! RESTA           [ shift and go to state 8 ]
+  ! SUMA            [ shift and go to state 8 ]
+  ! RESTA           [ shift and go to state 9 ]
 
 
-state 15
+state 17
 
     (5) term -> term MULTIPLICACION factor .
 
@@ -285,9 +342,10 @@ state 15
     RESTA           reduce using rule 5 (term -> term MULTIPLICACION factor .)
     $end            reduce using rule 5 (term -> term MULTIPLICACION factor .)
     PARENTESIS_D    reduce using rule 5 (term -> term MULTIPLICACION factor .)
+    CORCHETE_D      reduce using rule 5 (term -> term MULTIPLICACION factor .)
 
 
-state 16
+state 18
 
     (6) term -> term DIVISION factor .
 
@@ -297,9 +355,10 @@ state 16
     RESTA           reduce using rule 6 (term -> term DIVISION factor .)
     $end            reduce using rule 6 (term -> term DIVISION factor .)
     PARENTESIS_D    reduce using rule 6 (term -> term DIVISION factor .)
+    CORCHETE_D      reduce using rule 6 (term -> term DIVISION factor .)
 
 
-state 17
+state 19
 
     (9) factor -> PARENTESIS_I expression PARENTESIS_D .
 
@@ -309,4 +368,18 @@ state 17
     RESTA           reduce using rule 9 (factor -> PARENTESIS_I expression PARENTESIS_D .)
     $end            reduce using rule 9 (factor -> PARENTESIS_I expression PARENTESIS_D .)
     PARENTESIS_D    reduce using rule 9 (factor -> PARENTESIS_I expression PARENTESIS_D .)
+    CORCHETE_D      reduce using rule 9 (factor -> PARENTESIS_I expression PARENTESIS_D .)
+
+
+state 20
+
+    (10) factor -> CORCHETE_I expression CORCHETE_D .
+
+    MULTIPLICACION  reduce using rule 10 (factor -> CORCHETE_I expression CORCHETE_D .)
+    DIVISION        reduce using rule 10 (factor -> CORCHETE_I expression CORCHETE_D .)
+    SUMA            reduce using rule 10 (factor -> CORCHETE_I expression CORCHETE_D .)
+    RESTA           reduce using rule 10 (factor -> CORCHETE_I expression CORCHETE_D .)
+    $end            reduce using rule 10 (factor -> CORCHETE_I expression CORCHETE_D .)
+    PARENTESIS_D    reduce using rule 10 (factor -> CORCHETE_I expression CORCHETE_D .)
+    CORCHETE_D      reduce using rule 10 (factor -> CORCHETE_I expression CORCHETE_D .)
 

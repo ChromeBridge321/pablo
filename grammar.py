@@ -9,6 +9,8 @@ tokens = (
    'DIVISION',
    'PARENTESIS_I',
    'PARENTESIS_D',
+   'CORCHETE_I',
+   'CORCHETE_D',
    'ASIGNACION',
    'VARIABLE',
 
@@ -23,7 +25,7 @@ reserved = {
    'imprimir' : 'IMPRIMIR',
 }
 
-tokens = ['MULTIPLICACION', 'PARENTESIS_I', 'PARENTESIS_D','ASIGNACION', 'DIVISION', 'VARIABLE', 'NUMERO', 'RESTA', 'SUMA'] + list(reserved.values())
+tokens = ['MULTIPLICACION', 'PARENTESIS_I', 'PARENTESIS_D','ASIGNACION','CORCHETE_I','CORCHETE_D', 'DIVISION', 'VARIABLE', 'NUMERO', 'RESTA', 'SUMA'] + list(reserved.values())
 
 # Regular expression rules for simple tokens
 t_SUMA    = r'\+'
@@ -32,6 +34,8 @@ t_MULTIPLICACION   = r'\*'
 t_DIVISION  = r'/'
 t_PARENTESIS_I  = r'\('
 t_PARENTESIS_D  = r'\)'
+t_CORCHETE_I  = r'\['
+t_CORCHETE_D  = r'\]'
 t_ASIGNACION  = r'='
 t_SI = r'SI'
 t_SINO = r'SINO'
