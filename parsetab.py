@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftSUMARESTAleftMULTIPLICACIONDIVISIONleftPARENTESIS_IPARENTESIS_DleftCORCHETE_ICORCHETE_DASIGNACION CORCHETE_D CORCHETE_I DIVISION IMPRIMIR MIENTRAS MULTIPLICACION NUMERO PARA PARENTESIS_D PARENTESIS_I RESTA SI SINO SUMA VAR VARIABLEexpression : expression SUMA termexpression : expression RESTA expression\n| RESTA expressionexpression : termterm : term MULTIPLICACION factorterm : term DIVISION factorterm : factorfactor : NUMEROfactor : PARENTESIS_I expression PARENTESIS_D\n| CORCHETE_I expression CORCHETE_D'
+_lr_signature = 'leftSUMARESTAleftMULTIPLICACIONDIVISIONrightUMINUSASIGNACION CADENA DIVISION IMPRIMIR MIENTRAS MULTIPLICACION NUMERO PARA PARENTESIS_D PARENTESIS_I RESTA SI SINO SUMA VAR VARIABLEstatement : VARIABLE ASIGNACION expressionstatement : expressionexpression : expression SUMA expression\n| expression RESTA expression\n| expression MULTIPLICACION expression\n| expression DIVISION expressionexpression : RESTA expression %prec UMINUSexpression : PARENTESIS_I expression PARENTESIS_Dexpression : NUMEROexpression : CADENAexpression : VARIABLEstatement : IMPRIMIR PARENTESIS_I expression PARENTESIS_D'
     
-_lr_action_items = {'RESTA':([0,1,2,3,4,5,6,7,9,12,13,14,15,16,17,18,19,20,],[3,9,-4,3,-7,-8,3,3,3,-3,9,9,-1,-2,-5,-6,-9,-10,]),'NUMERO':([0,3,6,7,8,9,10,11,],[5,5,5,5,5,5,5,5,]),'PARENTESIS_I':([0,3,6,7,8,9,10,11,],[6,6,6,6,6,6,6,6,]),'CORCHETE_I':([0,3,6,7,8,9,10,11,],[7,7,7,7,7,7,7,7,]),'$end':([1,2,4,5,12,15,16,17,18,19,20,],[0,-4,-7,-8,-3,-1,-2,-5,-6,-9,-10,]),'SUMA':([1,2,4,5,12,13,14,15,16,17,18,19,20,],[8,-4,-7,-8,-3,8,8,-1,-2,-5,-6,-9,-10,]),'PARENTESIS_D':([2,4,5,12,13,15,16,17,18,19,20,],[-4,-7,-8,-3,19,-1,-2,-5,-6,-9,-10,]),'CORCHETE_D':([2,4,5,12,14,15,16,17,18,19,20,],[-4,-7,-8,-3,20,-1,-2,-5,-6,-9,-10,]),'MULTIPLICACION':([2,4,5,15,17,18,19,20,],[10,-7,-8,10,-5,-6,-9,-10,]),'DIVISION':([2,4,5,15,17,18,19,20,],[11,-7,-8,11,-5,-6,-9,-10,]),}
+_lr_action_items = {'VARIABLE':([0,5,6,9,10,11,12,13,14,],[2,16,16,16,16,16,16,16,16,]),'IMPRIMIR':([0,],[4,]),'RESTA':([0,2,3,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,],[6,-11,11,6,6,-9,-10,6,6,6,6,6,6,11,-11,-7,11,-3,-4,-5,-6,11,-8,]),'PARENTESIS_I':([0,4,5,6,9,10,11,12,13,14,],[5,14,5,5,5,5,5,5,5,5,]),'NUMERO':([0,5,6,9,10,11,12,13,14,],[7,7,7,7,7,7,7,7,7,]),'CADENA':([0,5,6,9,10,11,12,13,14,],[8,8,8,8,8,8,8,8,8,]),'$end':([1,2,3,7,8,16,17,18,19,20,21,22,24,25,],[0,-11,-2,-9,-10,-11,-7,-1,-3,-4,-5,-6,-8,-12,]),'ASIGNACION':([2,],[9,]),'SUMA':([2,3,7,8,15,16,17,18,19,20,21,22,23,24,],[-11,10,-9,-10,10,-11,-7,10,-3,-4,-5,-6,10,-8,]),'MULTIPLICACION':([2,3,7,8,15,16,17,18,19,20,21,22,23,24,],[-11,12,-9,-10,12,-11,-7,12,12,12,-5,-6,12,-8,]),'DIVISION':([2,3,7,8,15,16,17,18,19,20,21,22,23,24,],[-11,13,-9,-10,13,-11,-7,13,13,13,-5,-6,13,-8,]),'PARENTESIS_D':([7,8,15,16,17,19,20,21,22,23,24,],[-9,-10,24,-11,-7,-3,-4,-5,-6,25,-8,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'expression':([0,3,6,7,9,],[1,12,13,14,16,]),'term':([0,3,6,7,8,9,],[2,2,2,2,15,2,]),'factor':([0,3,6,7,8,9,10,11,],[4,4,4,4,4,4,17,18,]),}
+_lr_goto_items = {'statement':([0,],[1,]),'expression':([0,5,6,9,10,11,12,13,14,],[3,15,17,18,19,20,21,22,23,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,15 +26,17 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> expression","S'",1,None,None,None),
-  ('expression -> expression SUMA term','expression',3,'p_expression_plus','parser.py',13),
-  ('expression -> expression RESTA expression','expression',3,'p_expressions','parser.py',17),
-  ('expression -> RESTA expression','expression',2,'p_expressions','parser.py',18),
-  ('expression -> term','expression',1,'p_expression_term','parser.py',25),
-  ('term -> term MULTIPLICACION factor','term',3,'p_term_times','parser.py',29),
-  ('term -> term DIVISION factor','term',3,'p_term_div','parser.py',34),
-  ('term -> factor','term',1,'p_term_factor','parser.py',38),
-  ('factor -> NUMERO','factor',1,'p_factor_num','parser.py',42),
-  ('factor -> PARENTESIS_I expression PARENTESIS_D','factor',3,'p_factor_expr','parser.py',46),
-  ('factor -> CORCHETE_I expression CORCHETE_D','factor',3,'p_factor_expr','parser.py',47),
+  ("S' -> statement","S'",1,None,None,None),
+  ('statement -> VARIABLE ASIGNACION expression','statement',3,'p_statement_assign','parser.py',16),
+  ('statement -> expression','statement',1,'p_statement_expr','parser.py',21),
+  ('expression -> expression SUMA expression','expression',3,'p_expression_binop','parser.py',25),
+  ('expression -> expression RESTA expression','expression',3,'p_expression_binop','parser.py',26),
+  ('expression -> expression MULTIPLICACION expression','expression',3,'p_expression_binop','parser.py',27),
+  ('expression -> expression DIVISION expression','expression',3,'p_expression_binop','parser.py',28),
+  ('expression -> RESTA expression','expression',2,'p_expression_uminus','parser.py',39),
+  ('expression -> PARENTESIS_I expression PARENTESIS_D','expression',3,'p_expression_group','parser.py',43),
+  ('expression -> NUMERO','expression',1,'p_expression_number','parser.py',47),
+  ('expression -> CADENA','expression',1,'p_expression_string','parser.py',51),
+  ('expression -> VARIABLE','expression',1,'p_expression_variable','parser.py',55),
+  ('statement -> IMPRIMIR PARENTESIS_I expression PARENTESIS_D','statement',4,'p_print_statement','parser.py',63),
 ]

@@ -2,384 +2,491 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    ASIGNACION
-    IMPRIMIR
     MIENTRAS
     PARA
     SI
     SINO
     VAR
-    VARIABLE
 
 Grammar
 
-Rule 0     S' -> expression
-Rule 1     expression -> expression SUMA term
-Rule 2     expression -> expression RESTA expression
-Rule 3     expression -> RESTA expression
-Rule 4     expression -> term
-Rule 5     term -> term MULTIPLICACION factor
-Rule 6     term -> term DIVISION factor
-Rule 7     term -> factor
-Rule 8     factor -> NUMERO
-Rule 9     factor -> PARENTESIS_I expression PARENTESIS_D
-Rule 10    factor -> CORCHETE_I expression CORCHETE_D
+Rule 0     S' -> statement
+Rule 1     statement -> VARIABLE ASIGNACION expression
+Rule 2     statement -> expression
+Rule 3     expression -> expression SUMA expression
+Rule 4     expression -> expression RESTA expression
+Rule 5     expression -> expression MULTIPLICACION expression
+Rule 6     expression -> expression DIVISION expression
+Rule 7     expression -> RESTA expression
+Rule 8     expression -> PARENTESIS_I expression PARENTESIS_D
+Rule 9     expression -> NUMERO
+Rule 10    expression -> CADENA
+Rule 11    expression -> VARIABLE
+Rule 12    statement -> IMPRIMIR PARENTESIS_I expression PARENTESIS_D
 
 Terminals, with rules where they appear
 
-ASIGNACION           : 
-CORCHETE_D           : 10
-CORCHETE_I           : 10
+ASIGNACION           : 1
+CADENA               : 10
 DIVISION             : 6
-IMPRIMIR             : 
+IMPRIMIR             : 12
 MIENTRAS             : 
 MULTIPLICACION       : 5
-NUMERO               : 8
+NUMERO               : 9
 PARA                 : 
-PARENTESIS_D         : 9
-PARENTESIS_I         : 9
-RESTA                : 2 3
+PARENTESIS_D         : 8 12
+PARENTESIS_I         : 8 12
+RESTA                : 4 7
 SI                   : 
 SINO                 : 
-SUMA                 : 1
+SUMA                 : 3
 VAR                  : 
-VARIABLE             : 
+VARIABLE             : 1 11
 error                : 
 
 Nonterminals, with rules where they appear
 
-expression           : 1 2 2 3 9 10 0
-factor               : 5 6 7
-term                 : 1 4 5 6
+expression           : 1 2 3 3 4 4 5 5 6 6 7 8 12
+statement            : 0
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . expression
-    (1) expression -> . expression SUMA term
-    (2) expression -> . expression RESTA expression
-    (3) expression -> . RESTA expression
-    (4) expression -> . term
-    (5) term -> . term MULTIPLICACION factor
-    (6) term -> . term DIVISION factor
-    (7) term -> . factor
-    (8) factor -> . NUMERO
-    (9) factor -> . PARENTESIS_I expression PARENTESIS_D
-    (10) factor -> . CORCHETE_I expression CORCHETE_D
+    (0) S' -> . statement
+    (1) statement -> . VARIABLE ASIGNACION expression
+    (2) statement -> . expression
+    (12) statement -> . IMPRIMIR PARENTESIS_I expression PARENTESIS_D
+    (3) expression -> . expression SUMA expression
+    (4) expression -> . expression RESTA expression
+    (5) expression -> . expression MULTIPLICACION expression
+    (6) expression -> . expression DIVISION expression
+    (7) expression -> . RESTA expression
+    (8) expression -> . PARENTESIS_I expression PARENTESIS_D
+    (9) expression -> . NUMERO
+    (10) expression -> . CADENA
+    (11) expression -> . VARIABLE
 
-    RESTA           shift and go to state 3
-    NUMERO          shift and go to state 5
-    PARENTESIS_I    shift and go to state 6
-    CORCHETE_I      shift and go to state 7
+    VARIABLE        shift and go to state 2
+    IMPRIMIR        shift and go to state 4
+    RESTA           shift and go to state 6
+    PARENTESIS_I    shift and go to state 5
+    NUMERO          shift and go to state 7
+    CADENA          shift and go to state 8
 
-    expression                     shift and go to state 1
-    term                           shift and go to state 2
-    factor                         shift and go to state 4
+    statement                      shift and go to state 1
+    expression                     shift and go to state 3
 
 state 1
 
-    (0) S' -> expression .
-    (1) expression -> expression . SUMA term
-    (2) expression -> expression . RESTA expression
+    (0) S' -> statement .
 
-    SUMA            shift and go to state 8
-    RESTA           shift and go to state 9
 
 
 state 2
 
-    (4) expression -> term .
-    (5) term -> term . MULTIPLICACION factor
-    (6) term -> term . DIVISION factor
+    (1) statement -> VARIABLE . ASIGNACION expression
+    (11) expression -> VARIABLE .
 
-    SUMA            reduce using rule 4 (expression -> term .)
-    RESTA           reduce using rule 4 (expression -> term .)
-    $end            reduce using rule 4 (expression -> term .)
-    PARENTESIS_D    reduce using rule 4 (expression -> term .)
-    CORCHETE_D      reduce using rule 4 (expression -> term .)
-    MULTIPLICACION  shift and go to state 10
-    DIVISION        shift and go to state 11
+    ASIGNACION      shift and go to state 9
+    SUMA            reduce using rule 11 (expression -> VARIABLE .)
+    RESTA           reduce using rule 11 (expression -> VARIABLE .)
+    MULTIPLICACION  reduce using rule 11 (expression -> VARIABLE .)
+    DIVISION        reduce using rule 11 (expression -> VARIABLE .)
+    $end            reduce using rule 11 (expression -> VARIABLE .)
 
 
 state 3
 
-    (3) expression -> RESTA . expression
-    (1) expression -> . expression SUMA term
-    (2) expression -> . expression RESTA expression
-    (3) expression -> . RESTA expression
-    (4) expression -> . term
-    (5) term -> . term MULTIPLICACION factor
-    (6) term -> . term DIVISION factor
-    (7) term -> . factor
-    (8) factor -> . NUMERO
-    (9) factor -> . PARENTESIS_I expression PARENTESIS_D
-    (10) factor -> . CORCHETE_I expression CORCHETE_D
+    (2) statement -> expression .
+    (3) expression -> expression . SUMA expression
+    (4) expression -> expression . RESTA expression
+    (5) expression -> expression . MULTIPLICACION expression
+    (6) expression -> expression . DIVISION expression
 
-    RESTA           shift and go to state 3
-    NUMERO          shift and go to state 5
-    PARENTESIS_I    shift and go to state 6
-    CORCHETE_I      shift and go to state 7
+    $end            reduce using rule 2 (statement -> expression .)
+    SUMA            shift and go to state 10
+    RESTA           shift and go to state 11
+    MULTIPLICACION  shift and go to state 12
+    DIVISION        shift and go to state 13
 
-    expression                     shift and go to state 12
-    term                           shift and go to state 2
-    factor                         shift and go to state 4
 
 state 4
 
-    (7) term -> factor .
+    (12) statement -> IMPRIMIR . PARENTESIS_I expression PARENTESIS_D
 
-    MULTIPLICACION  reduce using rule 7 (term -> factor .)
-    DIVISION        reduce using rule 7 (term -> factor .)
-    SUMA            reduce using rule 7 (term -> factor .)
-    RESTA           reduce using rule 7 (term -> factor .)
-    $end            reduce using rule 7 (term -> factor .)
-    PARENTESIS_D    reduce using rule 7 (term -> factor .)
-    CORCHETE_D      reduce using rule 7 (term -> factor .)
+    PARENTESIS_I    shift and go to state 14
 
 
 state 5
 
-    (8) factor -> NUMERO .
+    (8) expression -> PARENTESIS_I . expression PARENTESIS_D
+    (3) expression -> . expression SUMA expression
+    (4) expression -> . expression RESTA expression
+    (5) expression -> . expression MULTIPLICACION expression
+    (6) expression -> . expression DIVISION expression
+    (7) expression -> . RESTA expression
+    (8) expression -> . PARENTESIS_I expression PARENTESIS_D
+    (9) expression -> . NUMERO
+    (10) expression -> . CADENA
+    (11) expression -> . VARIABLE
 
-    MULTIPLICACION  reduce using rule 8 (factor -> NUMERO .)
-    DIVISION        reduce using rule 8 (factor -> NUMERO .)
-    SUMA            reduce using rule 8 (factor -> NUMERO .)
-    RESTA           reduce using rule 8 (factor -> NUMERO .)
-    $end            reduce using rule 8 (factor -> NUMERO .)
-    PARENTESIS_D    reduce using rule 8 (factor -> NUMERO .)
-    CORCHETE_D      reduce using rule 8 (factor -> NUMERO .)
+    RESTA           shift and go to state 6
+    PARENTESIS_I    shift and go to state 5
+    NUMERO          shift and go to state 7
+    CADENA          shift and go to state 8
+    VARIABLE        shift and go to state 16
 
+    expression                     shift and go to state 15
 
 state 6
 
-    (9) factor -> PARENTESIS_I . expression PARENTESIS_D
-    (1) expression -> . expression SUMA term
-    (2) expression -> . expression RESTA expression
-    (3) expression -> . RESTA expression
-    (4) expression -> . term
-    (5) term -> . term MULTIPLICACION factor
-    (6) term -> . term DIVISION factor
-    (7) term -> . factor
-    (8) factor -> . NUMERO
-    (9) factor -> . PARENTESIS_I expression PARENTESIS_D
-    (10) factor -> . CORCHETE_I expression CORCHETE_D
+    (7) expression -> RESTA . expression
+    (3) expression -> . expression SUMA expression
+    (4) expression -> . expression RESTA expression
+    (5) expression -> . expression MULTIPLICACION expression
+    (6) expression -> . expression DIVISION expression
+    (7) expression -> . RESTA expression
+    (8) expression -> . PARENTESIS_I expression PARENTESIS_D
+    (9) expression -> . NUMERO
+    (10) expression -> . CADENA
+    (11) expression -> . VARIABLE
 
-    RESTA           shift and go to state 3
-    NUMERO          shift and go to state 5
-    PARENTESIS_I    shift and go to state 6
-    CORCHETE_I      shift and go to state 7
+    RESTA           shift and go to state 6
+    PARENTESIS_I    shift and go to state 5
+    NUMERO          shift and go to state 7
+    CADENA          shift and go to state 8
+    VARIABLE        shift and go to state 16
 
-    expression                     shift and go to state 13
-    term                           shift and go to state 2
-    factor                         shift and go to state 4
+    expression                     shift and go to state 17
 
 state 7
 
-    (10) factor -> CORCHETE_I . expression CORCHETE_D
-    (1) expression -> . expression SUMA term
-    (2) expression -> . expression RESTA expression
-    (3) expression -> . RESTA expression
-    (4) expression -> . term
-    (5) term -> . term MULTIPLICACION factor
-    (6) term -> . term DIVISION factor
-    (7) term -> . factor
-    (8) factor -> . NUMERO
-    (9) factor -> . PARENTESIS_I expression PARENTESIS_D
-    (10) factor -> . CORCHETE_I expression CORCHETE_D
+    (9) expression -> NUMERO .
 
-    RESTA           shift and go to state 3
-    NUMERO          shift and go to state 5
-    PARENTESIS_I    shift and go to state 6
-    CORCHETE_I      shift and go to state 7
+    SUMA            reduce using rule 9 (expression -> NUMERO .)
+    RESTA           reduce using rule 9 (expression -> NUMERO .)
+    MULTIPLICACION  reduce using rule 9 (expression -> NUMERO .)
+    DIVISION        reduce using rule 9 (expression -> NUMERO .)
+    $end            reduce using rule 9 (expression -> NUMERO .)
+    PARENTESIS_D    reduce using rule 9 (expression -> NUMERO .)
 
-    expression                     shift and go to state 14
-    term                           shift and go to state 2
-    factor                         shift and go to state 4
 
 state 8
 
-    (1) expression -> expression SUMA . term
-    (5) term -> . term MULTIPLICACION factor
-    (6) term -> . term DIVISION factor
-    (7) term -> . factor
-    (8) factor -> . NUMERO
-    (9) factor -> . PARENTESIS_I expression PARENTESIS_D
-    (10) factor -> . CORCHETE_I expression CORCHETE_D
+    (10) expression -> CADENA .
 
-    NUMERO          shift and go to state 5
-    PARENTESIS_I    shift and go to state 6
-    CORCHETE_I      shift and go to state 7
+    SUMA            reduce using rule 10 (expression -> CADENA .)
+    RESTA           reduce using rule 10 (expression -> CADENA .)
+    MULTIPLICACION  reduce using rule 10 (expression -> CADENA .)
+    DIVISION        reduce using rule 10 (expression -> CADENA .)
+    $end            reduce using rule 10 (expression -> CADENA .)
+    PARENTESIS_D    reduce using rule 10 (expression -> CADENA .)
 
-    term                           shift and go to state 15
-    factor                         shift and go to state 4
 
 state 9
 
-    (2) expression -> expression RESTA . expression
-    (1) expression -> . expression SUMA term
-    (2) expression -> . expression RESTA expression
-    (3) expression -> . RESTA expression
-    (4) expression -> . term
-    (5) term -> . term MULTIPLICACION factor
-    (6) term -> . term DIVISION factor
-    (7) term -> . factor
-    (8) factor -> . NUMERO
-    (9) factor -> . PARENTESIS_I expression PARENTESIS_D
-    (10) factor -> . CORCHETE_I expression CORCHETE_D
+    (1) statement -> VARIABLE ASIGNACION . expression
+    (3) expression -> . expression SUMA expression
+    (4) expression -> . expression RESTA expression
+    (5) expression -> . expression MULTIPLICACION expression
+    (6) expression -> . expression DIVISION expression
+    (7) expression -> . RESTA expression
+    (8) expression -> . PARENTESIS_I expression PARENTESIS_D
+    (9) expression -> . NUMERO
+    (10) expression -> . CADENA
+    (11) expression -> . VARIABLE
 
-    RESTA           shift and go to state 3
-    NUMERO          shift and go to state 5
-    PARENTESIS_I    shift and go to state 6
-    CORCHETE_I      shift and go to state 7
+    RESTA           shift and go to state 6
+    PARENTESIS_I    shift and go to state 5
+    NUMERO          shift and go to state 7
+    CADENA          shift and go to state 8
+    VARIABLE        shift and go to state 16
 
-    expression                     shift and go to state 16
-    term                           shift and go to state 2
-    factor                         shift and go to state 4
+    expression                     shift and go to state 18
 
 state 10
 
-    (5) term -> term MULTIPLICACION . factor
-    (8) factor -> . NUMERO
-    (9) factor -> . PARENTESIS_I expression PARENTESIS_D
-    (10) factor -> . CORCHETE_I expression CORCHETE_D
+    (3) expression -> expression SUMA . expression
+    (3) expression -> . expression SUMA expression
+    (4) expression -> . expression RESTA expression
+    (5) expression -> . expression MULTIPLICACION expression
+    (6) expression -> . expression DIVISION expression
+    (7) expression -> . RESTA expression
+    (8) expression -> . PARENTESIS_I expression PARENTESIS_D
+    (9) expression -> . NUMERO
+    (10) expression -> . CADENA
+    (11) expression -> . VARIABLE
 
-    NUMERO          shift and go to state 5
-    PARENTESIS_I    shift and go to state 6
-    CORCHETE_I      shift and go to state 7
+    RESTA           shift and go to state 6
+    PARENTESIS_I    shift and go to state 5
+    NUMERO          shift and go to state 7
+    CADENA          shift and go to state 8
+    VARIABLE        shift and go to state 16
 
-    factor                         shift and go to state 17
+    expression                     shift and go to state 19
 
 state 11
 
-    (6) term -> term DIVISION . factor
-    (8) factor -> . NUMERO
-    (9) factor -> . PARENTESIS_I expression PARENTESIS_D
-    (10) factor -> . CORCHETE_I expression CORCHETE_D
+    (4) expression -> expression RESTA . expression
+    (3) expression -> . expression SUMA expression
+    (4) expression -> . expression RESTA expression
+    (5) expression -> . expression MULTIPLICACION expression
+    (6) expression -> . expression DIVISION expression
+    (7) expression -> . RESTA expression
+    (8) expression -> . PARENTESIS_I expression PARENTESIS_D
+    (9) expression -> . NUMERO
+    (10) expression -> . CADENA
+    (11) expression -> . VARIABLE
 
-    NUMERO          shift and go to state 5
-    PARENTESIS_I    shift and go to state 6
-    CORCHETE_I      shift and go to state 7
+    RESTA           shift and go to state 6
+    PARENTESIS_I    shift and go to state 5
+    NUMERO          shift and go to state 7
+    CADENA          shift and go to state 8
+    VARIABLE        shift and go to state 16
 
-    factor                         shift and go to state 18
+    expression                     shift and go to state 20
 
 state 12
 
-    (3) expression -> RESTA expression .
-    (1) expression -> expression . SUMA term
-    (2) expression -> expression . RESTA expression
+    (5) expression -> expression MULTIPLICACION . expression
+    (3) expression -> . expression SUMA expression
+    (4) expression -> . expression RESTA expression
+    (5) expression -> . expression MULTIPLICACION expression
+    (6) expression -> . expression DIVISION expression
+    (7) expression -> . RESTA expression
+    (8) expression -> . PARENTESIS_I expression PARENTESIS_D
+    (9) expression -> . NUMERO
+    (10) expression -> . CADENA
+    (11) expression -> . VARIABLE
 
-    SUMA            reduce using rule 3 (expression -> RESTA expression .)
-    RESTA           reduce using rule 3 (expression -> RESTA expression .)
-    $end            reduce using rule 3 (expression -> RESTA expression .)
-    PARENTESIS_D    reduce using rule 3 (expression -> RESTA expression .)
-    CORCHETE_D      reduce using rule 3 (expression -> RESTA expression .)
+    RESTA           shift and go to state 6
+    PARENTESIS_I    shift and go to state 5
+    NUMERO          shift and go to state 7
+    CADENA          shift and go to state 8
+    VARIABLE        shift and go to state 16
 
-  ! SUMA            [ shift and go to state 8 ]
-  ! RESTA           [ shift and go to state 9 ]
-
+    expression                     shift and go to state 21
 
 state 13
 
-    (9) factor -> PARENTESIS_I expression . PARENTESIS_D
-    (1) expression -> expression . SUMA term
-    (2) expression -> expression . RESTA expression
+    (6) expression -> expression DIVISION . expression
+    (3) expression -> . expression SUMA expression
+    (4) expression -> . expression RESTA expression
+    (5) expression -> . expression MULTIPLICACION expression
+    (6) expression -> . expression DIVISION expression
+    (7) expression -> . RESTA expression
+    (8) expression -> . PARENTESIS_I expression PARENTESIS_D
+    (9) expression -> . NUMERO
+    (10) expression -> . CADENA
+    (11) expression -> . VARIABLE
 
-    PARENTESIS_D    shift and go to state 19
-    SUMA            shift and go to state 8
-    RESTA           shift and go to state 9
+    RESTA           shift and go to state 6
+    PARENTESIS_I    shift and go to state 5
+    NUMERO          shift and go to state 7
+    CADENA          shift and go to state 8
+    VARIABLE        shift and go to state 16
 
+    expression                     shift and go to state 22
 
 state 14
 
-    (10) factor -> CORCHETE_I expression . CORCHETE_D
-    (1) expression -> expression . SUMA term
-    (2) expression -> expression . RESTA expression
+    (12) statement -> IMPRIMIR PARENTESIS_I . expression PARENTESIS_D
+    (3) expression -> . expression SUMA expression
+    (4) expression -> . expression RESTA expression
+    (5) expression -> . expression MULTIPLICACION expression
+    (6) expression -> . expression DIVISION expression
+    (7) expression -> . RESTA expression
+    (8) expression -> . PARENTESIS_I expression PARENTESIS_D
+    (9) expression -> . NUMERO
+    (10) expression -> . CADENA
+    (11) expression -> . VARIABLE
 
-    CORCHETE_D      shift and go to state 20
-    SUMA            shift and go to state 8
-    RESTA           shift and go to state 9
+    RESTA           shift and go to state 6
+    PARENTESIS_I    shift and go to state 5
+    NUMERO          shift and go to state 7
+    CADENA          shift and go to state 8
+    VARIABLE        shift and go to state 16
 
+    expression                     shift and go to state 23
 
 state 15
 
-    (1) expression -> expression SUMA term .
-    (5) term -> term . MULTIPLICACION factor
-    (6) term -> term . DIVISION factor
+    (8) expression -> PARENTESIS_I expression . PARENTESIS_D
+    (3) expression -> expression . SUMA expression
+    (4) expression -> expression . RESTA expression
+    (5) expression -> expression . MULTIPLICACION expression
+    (6) expression -> expression . DIVISION expression
 
-    SUMA            reduce using rule 1 (expression -> expression SUMA term .)
-    RESTA           reduce using rule 1 (expression -> expression SUMA term .)
-    $end            reduce using rule 1 (expression -> expression SUMA term .)
-    PARENTESIS_D    reduce using rule 1 (expression -> expression SUMA term .)
-    CORCHETE_D      reduce using rule 1 (expression -> expression SUMA term .)
-    MULTIPLICACION  shift and go to state 10
-    DIVISION        shift and go to state 11
+    PARENTESIS_D    shift and go to state 24
+    SUMA            shift and go to state 10
+    RESTA           shift and go to state 11
+    MULTIPLICACION  shift and go to state 12
+    DIVISION        shift and go to state 13
 
 
 state 16
 
-    (2) expression -> expression RESTA expression .
-    (1) expression -> expression . SUMA term
-    (2) expression -> expression . RESTA expression
+    (11) expression -> VARIABLE .
 
-    SUMA            reduce using rule 2 (expression -> expression RESTA expression .)
-    RESTA           reduce using rule 2 (expression -> expression RESTA expression .)
-    $end            reduce using rule 2 (expression -> expression RESTA expression .)
-    PARENTESIS_D    reduce using rule 2 (expression -> expression RESTA expression .)
-    CORCHETE_D      reduce using rule 2 (expression -> expression RESTA expression .)
-
-  ! SUMA            [ shift and go to state 8 ]
-  ! RESTA           [ shift and go to state 9 ]
+    PARENTESIS_D    reduce using rule 11 (expression -> VARIABLE .)
+    SUMA            reduce using rule 11 (expression -> VARIABLE .)
+    RESTA           reduce using rule 11 (expression -> VARIABLE .)
+    MULTIPLICACION  reduce using rule 11 (expression -> VARIABLE .)
+    DIVISION        reduce using rule 11 (expression -> VARIABLE .)
+    $end            reduce using rule 11 (expression -> VARIABLE .)
 
 
 state 17
 
-    (5) term -> term MULTIPLICACION factor .
+    (7) expression -> RESTA expression .
+    (3) expression -> expression . SUMA expression
+    (4) expression -> expression . RESTA expression
+    (5) expression -> expression . MULTIPLICACION expression
+    (6) expression -> expression . DIVISION expression
 
-    MULTIPLICACION  reduce using rule 5 (term -> term MULTIPLICACION factor .)
-    DIVISION        reduce using rule 5 (term -> term MULTIPLICACION factor .)
-    SUMA            reduce using rule 5 (term -> term MULTIPLICACION factor .)
-    RESTA           reduce using rule 5 (term -> term MULTIPLICACION factor .)
-    $end            reduce using rule 5 (term -> term MULTIPLICACION factor .)
-    PARENTESIS_D    reduce using rule 5 (term -> term MULTIPLICACION factor .)
-    CORCHETE_D      reduce using rule 5 (term -> term MULTIPLICACION factor .)
+    SUMA            reduce using rule 7 (expression -> RESTA expression .)
+    RESTA           reduce using rule 7 (expression -> RESTA expression .)
+    MULTIPLICACION  reduce using rule 7 (expression -> RESTA expression .)
+    DIVISION        reduce using rule 7 (expression -> RESTA expression .)
+    $end            reduce using rule 7 (expression -> RESTA expression .)
+    PARENTESIS_D    reduce using rule 7 (expression -> RESTA expression .)
+
+  ! SUMA            [ shift and go to state 10 ]
+  ! RESTA           [ shift and go to state 11 ]
+  ! MULTIPLICACION  [ shift and go to state 12 ]
+  ! DIVISION        [ shift and go to state 13 ]
 
 
 state 18
 
-    (6) term -> term DIVISION factor .
+    (1) statement -> VARIABLE ASIGNACION expression .
+    (3) expression -> expression . SUMA expression
+    (4) expression -> expression . RESTA expression
+    (5) expression -> expression . MULTIPLICACION expression
+    (6) expression -> expression . DIVISION expression
 
-    MULTIPLICACION  reduce using rule 6 (term -> term DIVISION factor .)
-    DIVISION        reduce using rule 6 (term -> term DIVISION factor .)
-    SUMA            reduce using rule 6 (term -> term DIVISION factor .)
-    RESTA           reduce using rule 6 (term -> term DIVISION factor .)
-    $end            reduce using rule 6 (term -> term DIVISION factor .)
-    PARENTESIS_D    reduce using rule 6 (term -> term DIVISION factor .)
-    CORCHETE_D      reduce using rule 6 (term -> term DIVISION factor .)
+    $end            reduce using rule 1 (statement -> VARIABLE ASIGNACION expression .)
+    SUMA            shift and go to state 10
+    RESTA           shift and go to state 11
+    MULTIPLICACION  shift and go to state 12
+    DIVISION        shift and go to state 13
 
 
 state 19
 
-    (9) factor -> PARENTESIS_I expression PARENTESIS_D .
+    (3) expression -> expression SUMA expression .
+    (3) expression -> expression . SUMA expression
+    (4) expression -> expression . RESTA expression
+    (5) expression -> expression . MULTIPLICACION expression
+    (6) expression -> expression . DIVISION expression
 
-    MULTIPLICACION  reduce using rule 9 (factor -> PARENTESIS_I expression PARENTESIS_D .)
-    DIVISION        reduce using rule 9 (factor -> PARENTESIS_I expression PARENTESIS_D .)
-    SUMA            reduce using rule 9 (factor -> PARENTESIS_I expression PARENTESIS_D .)
-    RESTA           reduce using rule 9 (factor -> PARENTESIS_I expression PARENTESIS_D .)
-    $end            reduce using rule 9 (factor -> PARENTESIS_I expression PARENTESIS_D .)
-    PARENTESIS_D    reduce using rule 9 (factor -> PARENTESIS_I expression PARENTESIS_D .)
-    CORCHETE_D      reduce using rule 9 (factor -> PARENTESIS_I expression PARENTESIS_D .)
+    SUMA            reduce using rule 3 (expression -> expression SUMA expression .)
+    RESTA           reduce using rule 3 (expression -> expression SUMA expression .)
+    $end            reduce using rule 3 (expression -> expression SUMA expression .)
+    PARENTESIS_D    reduce using rule 3 (expression -> expression SUMA expression .)
+    MULTIPLICACION  shift and go to state 12
+    DIVISION        shift and go to state 13
+
+  ! MULTIPLICACION  [ reduce using rule 3 (expression -> expression SUMA expression .) ]
+  ! DIVISION        [ reduce using rule 3 (expression -> expression SUMA expression .) ]
+  ! SUMA            [ shift and go to state 10 ]
+  ! RESTA           [ shift and go to state 11 ]
 
 
 state 20
 
-    (10) factor -> CORCHETE_I expression CORCHETE_D .
+    (4) expression -> expression RESTA expression .
+    (3) expression -> expression . SUMA expression
+    (4) expression -> expression . RESTA expression
+    (5) expression -> expression . MULTIPLICACION expression
+    (6) expression -> expression . DIVISION expression
 
-    MULTIPLICACION  reduce using rule 10 (factor -> CORCHETE_I expression CORCHETE_D .)
-    DIVISION        reduce using rule 10 (factor -> CORCHETE_I expression CORCHETE_D .)
-    SUMA            reduce using rule 10 (factor -> CORCHETE_I expression CORCHETE_D .)
-    RESTA           reduce using rule 10 (factor -> CORCHETE_I expression CORCHETE_D .)
-    $end            reduce using rule 10 (factor -> CORCHETE_I expression CORCHETE_D .)
-    PARENTESIS_D    reduce using rule 10 (factor -> CORCHETE_I expression CORCHETE_D .)
-    CORCHETE_D      reduce using rule 10 (factor -> CORCHETE_I expression CORCHETE_D .)
+    SUMA            reduce using rule 4 (expression -> expression RESTA expression .)
+    RESTA           reduce using rule 4 (expression -> expression RESTA expression .)
+    $end            reduce using rule 4 (expression -> expression RESTA expression .)
+    PARENTESIS_D    reduce using rule 4 (expression -> expression RESTA expression .)
+    MULTIPLICACION  shift and go to state 12
+    DIVISION        shift and go to state 13
+
+  ! MULTIPLICACION  [ reduce using rule 4 (expression -> expression RESTA expression .) ]
+  ! DIVISION        [ reduce using rule 4 (expression -> expression RESTA expression .) ]
+  ! SUMA            [ shift and go to state 10 ]
+  ! RESTA           [ shift and go to state 11 ]
+
+
+state 21
+
+    (5) expression -> expression MULTIPLICACION expression .
+    (3) expression -> expression . SUMA expression
+    (4) expression -> expression . RESTA expression
+    (5) expression -> expression . MULTIPLICACION expression
+    (6) expression -> expression . DIVISION expression
+
+    SUMA            reduce using rule 5 (expression -> expression MULTIPLICACION expression .)
+    RESTA           reduce using rule 5 (expression -> expression MULTIPLICACION expression .)
+    MULTIPLICACION  reduce using rule 5 (expression -> expression MULTIPLICACION expression .)
+    DIVISION        reduce using rule 5 (expression -> expression MULTIPLICACION expression .)
+    $end            reduce using rule 5 (expression -> expression MULTIPLICACION expression .)
+    PARENTESIS_D    reduce using rule 5 (expression -> expression MULTIPLICACION expression .)
+
+  ! SUMA            [ shift and go to state 10 ]
+  ! RESTA           [ shift and go to state 11 ]
+  ! MULTIPLICACION  [ shift and go to state 12 ]
+  ! DIVISION        [ shift and go to state 13 ]
+
+
+state 22
+
+    (6) expression -> expression DIVISION expression .
+    (3) expression -> expression . SUMA expression
+    (4) expression -> expression . RESTA expression
+    (5) expression -> expression . MULTIPLICACION expression
+    (6) expression -> expression . DIVISION expression
+
+    SUMA            reduce using rule 6 (expression -> expression DIVISION expression .)
+    RESTA           reduce using rule 6 (expression -> expression DIVISION expression .)
+    MULTIPLICACION  reduce using rule 6 (expression -> expression DIVISION expression .)
+    DIVISION        reduce using rule 6 (expression -> expression DIVISION expression .)
+    $end            reduce using rule 6 (expression -> expression DIVISION expression .)
+    PARENTESIS_D    reduce using rule 6 (expression -> expression DIVISION expression .)
+
+  ! SUMA            [ shift and go to state 10 ]
+  ! RESTA           [ shift and go to state 11 ]
+  ! MULTIPLICACION  [ shift and go to state 12 ]
+  ! DIVISION        [ shift and go to state 13 ]
+
+
+state 23
+
+    (12) statement -> IMPRIMIR PARENTESIS_I expression . PARENTESIS_D
+    (3) expression -> expression . SUMA expression
+    (4) expression -> expression . RESTA expression
+    (5) expression -> expression . MULTIPLICACION expression
+    (6) expression -> expression . DIVISION expression
+
+    PARENTESIS_D    shift and go to state 25
+    SUMA            shift and go to state 10
+    RESTA           shift and go to state 11
+    MULTIPLICACION  shift and go to state 12
+    DIVISION        shift and go to state 13
+
+
+state 24
+
+    (8) expression -> PARENTESIS_I expression PARENTESIS_D .
+
+    SUMA            reduce using rule 8 (expression -> PARENTESIS_I expression PARENTESIS_D .)
+    RESTA           reduce using rule 8 (expression -> PARENTESIS_I expression PARENTESIS_D .)
+    MULTIPLICACION  reduce using rule 8 (expression -> PARENTESIS_I expression PARENTESIS_D .)
+    DIVISION        reduce using rule 8 (expression -> PARENTESIS_I expression PARENTESIS_D .)
+    $end            reduce using rule 8 (expression -> PARENTESIS_I expression PARENTESIS_D .)
+    PARENTESIS_D    reduce using rule 8 (expression -> PARENTESIS_I expression PARENTESIS_D .)
+
+
+state 25
+
+    (12) statement -> IMPRIMIR PARENTESIS_I expression PARENTESIS_D .
+
+    $end            reduce using rule 12 (statement -> IMPRIMIR PARENTESIS_I expression PARENTESIS_D .)
 
