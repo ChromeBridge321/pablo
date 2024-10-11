@@ -2,11 +2,17 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
+    DIFF
+    IGUAL
+    INCRE
+    LLAVE_D
+    LLAVE_I
+    MAYORQ
+    MENORQ
     MIENTRAS
     PARA
     SI
     SINO
-    VAR
 
 Grammar
 
@@ -28,8 +34,15 @@ Terminals, with rules where they appear
 
 ASIGNACION           : 1
 CADENA               : 10
+DIFF                 : 
 DIVISION             : 6
+IGUAL                : 
 IMPRIMIR             : 12
+INCRE                : 
+LLAVE_D              : 
+LLAVE_I              : 
+MAYORQ               : 
+MENORQ               : 
 MIENTRAS             : 
 MULTIPLICACION       : 5
 NUMERO               : 9
@@ -40,7 +53,6 @@ RESTA                : 4 7
 SI                   : 
 SINO                 : 
 SUMA                 : 3
-VAR                  : 
 VARIABLE             : 1 11
 error                : 
 

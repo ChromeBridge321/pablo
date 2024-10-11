@@ -12,12 +12,19 @@ tokens = (
     'ASIGNACION',
     'VARIABLE',
     'CADENA',
+    'LLAVE_I',
+    'LLAVE_D',
+    'MAYORQ',
+    'MENORQ',
+    'IGUAL',
+    'DIFF',
+    'INCRE'
+    
 )
 
 # Reserved words
 reserved = {
     'si': 'SI',
-    'var': 'VAR',
     'sino': 'SINO',
     'para': 'PARA',
     'mientras': 'MIENTRAS',
@@ -25,7 +32,9 @@ reserved = {
 }
 
 # Tokens list includes reserved words
-tokens = ['MULTIPLICACION', 'PARENTESIS_I', 'PARENTESIS_D', 'ASIGNACION', 'DIVISION', 'VARIABLE', 'NUMERO', 'CADENA', 'RESTA', 'SUMA'] + list(reserved.values())
+tokens = ['MULTIPLICACION', 'PARENTESIS_I', 'PARENTESIS_D', 'ASIGNACION', 
+ 'DIVISION', 'VARIABLE', 'LLAVE_I', 'LLAVE_D', 'NUMERO', 'CADENA', 
+ 'MAYORQ', 'MENORQ', 'RESTA', 'IGUAL','INCRE', 'SUMA', 'DIFF'] + list(reserved.values())
 
 # Regular expression rules for simple tokens
 t_SUMA = r'\+'
@@ -34,7 +43,14 @@ t_MULTIPLICACION = r'\*'
 t_DIVISION = r'/'
 t_PARENTESIS_I = r'\('
 t_PARENTESIS_D = r'\)'
+t_LLAVE_I = r'\{'
+t_LLAVE_D = r'\}'
 t_ASIGNACION = r'='
+t_MAYORQ = r'>'
+t_MENORQ = r'<'
+t_IGUAL = r'=='
+t_INCRE = r'\+\+'
+t_DIFF = r'!='
 t_CADENA = r'\"([^\\\n]|(\\.))*?\"'
 
 # Rule for recognizing reserved words and variables
@@ -68,7 +84,7 @@ lexer = lex.lex()
 
 # Test it out
 data = '''
-imprimir(5+5)
+hola ++
 '''
 
 # Give the lexer some input
