@@ -84,7 +84,12 @@ lexer = lex.lex()
 
 # Test it out
 data = '''
-hola ++
+x = 0
+()
++
+*
+-
+/
 '''
 
 # Give the lexer some input
