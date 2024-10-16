@@ -18,8 +18,8 @@ tokens = (
     'MENORQ',
     'IGUAL',
     'DIFF',
-    'INCRE'
-    
+    'INCRE',
+    'PUNTOCOMA'  # Nuevo token añadido
 )
 
 # Reserved words
@@ -28,13 +28,14 @@ reserved = {
     'sino': 'SINO',
     'para': 'PARA',
     'mientras': 'MIENTRAS',
-    'imprimir': 'IMPRIMIR',  # Aquí está IMPRIMIR
+    'imprimir': 'IMPRIMIR',
 }
 
 # Tokens list includes reserved words
 tokens = ['MULTIPLICACION', 'PARENTESIS_I', 'PARENTESIS_D', 'ASIGNACION', 
- 'DIVISION', 'VARIABLE', 'LLAVE_I', 'LLAVE_D', 'NUMERO', 'CADENA', 
- 'MAYORQ', 'MENORQ', 'RESTA', 'IGUAL','INCRE', 'SUMA', 'DIFF'] + list(reserved.values())
+         'DIVISION', 'VARIABLE', 'LLAVE_I', 'LLAVE_D', 'NUMERO', 'CADENA', 
+         'MAYORQ', 'MENORQ', 'RESTA', 'IGUAL', 'INCRE', 'SUMA', 'DIFF',
+         'PUNTOCOMA'] + list(reserved.values())
 
 # Regular expression rules for simple tokens
 t_SUMA = r'\+'
@@ -52,12 +53,13 @@ t_IGUAL = r'=='
 t_INCRE = r'\+\+'
 t_DIFF = r'!='
 t_CADENA = r'\"([^\\\n]|(\\.))*?\"'
+t_PUNTOCOMA = r';'  # Nueva regla para el punto y coma
 
 # Rule for recognizing reserved words and variables
 def t_VARIABLE(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
-    t.value = t.value.lower()  # Convertimos la entrada a minúsculas
-    t.type = reserved.get(t.value, 'VARIABLE')  # Check for reserved words
+    t.value = t.value.lower()
+    t.type = reserved.get(t.value, 'VARIABLE')
     return t
 
 # Rule for recognizing numbers
@@ -81,24 +83,3 @@ def t_error(t):
 
 # Build the lexer
 lexer = lex.lex()
-
-# Test it out
-data = '''
-x = 0
-()
-+
-*
--
-/
-'''
-
-# Give the lexer some input
-lexer.input(data)
-
-# Tokenize
-while True:
-    tok = lexer.token()
-    if not tok: 
-        break      # No more input
-    print(tok)
-##
