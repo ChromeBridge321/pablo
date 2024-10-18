@@ -19,7 +19,7 @@ tokens = (
     'IGUAL',
     'DIFF',
     'INCRE',
-    'PUNTOCOMA'  # Nuevo token añadido
+    'PUNTOCOMA',
 )
 
 # Reserved words
@@ -53,33 +53,27 @@ t_IGUAL = r'=='
 t_INCRE = r'\+\+'
 t_DIFF = r'!='
 t_CADENA = r'\"([^\\\n]|(\\.))*?\"'
-t_PUNTOCOMA = r';'  # Nueva regla para el punto y coma
+t_PUNTOCOMA = r';'
 
-# Rule for recognizing reserved words and variables
 def t_VARIABLE(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
     t.value = t.value.lower()
     t.type = reserved.get(t.value, 'VARIABLE')
     return t
 
-# Rule for recognizing numbers
 def t_NUMERO(t):
     r'\d+'
     t.value = int(t.value)    
     return t
 
-# Rule to track line numbers
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
 
-# Ignored characters (spaces and tabs)
 t_ignore = ' \t'
 
-# Error handling rule
 def t_error(t):
     print(f"Illegal character '{t.value[0]}'")
     t.lexer.skip(1)
 
-# Build the lexer
 lexer = lex.lex()

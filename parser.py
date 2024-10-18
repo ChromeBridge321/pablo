@@ -1,9 +1,5 @@
 import ply.yacc as yacc
-from grammar import tokens
-import logging
-
-# Cambiamos el nivel de logging a ERROR para suprimir los mensajes de DEBUG
-logging.basicConfig(level=logging.ERROR)
+from grammar import tokens  
 
 precedence = (
     ('left', 'SUMA', 'RESTA'),
@@ -11,7 +7,6 @@ precedence = (
     ('right', 'UMINUS'),
 )
 
-# Dictionary to store variables
 variables = {}
 
 def p_program(p):
@@ -39,6 +34,21 @@ def p_statement_expr(p):
 def p_statement_increment(p):
     'statement : VARIABLE INCRE'
     p[0] = ('increment', p[1])
+
+# Nueva regla para SI
+def p_statement_if(p):
+    'statement : SI PARENTESIS_I condicion PARENTESIS_D LLAVE_I statement_list LLAVE_D'
+    p[0] = ('si', p[3], p[6])
+
+# Nueva regla para SI-SINO
+def p_statement_if_else(p):
+    'statement : SI PARENTESIS_I condicion PARENTESIS_D LLAVE_I statement_list LLAVE_D SINO LLAVE_I statement_list LLAVE_D'
+    p[0] = ('si_sino', p[3], p[6], p[10])
+
+# Nueva regla para PARA
+def p_statement_for(p):
+    'statement : PARA PARENTESIS_I statement_list condicion PUNTOCOMA statement PARENTESIS_D LLAVE_I statement_list LLAVE_D'
+    p[0] = ('para', p[3], p[4], p[6], p[9])
 
 def p_expression_binop(p):
     '''expression : expression SUMA expression
@@ -88,7 +98,6 @@ def p_error(p):
     else:
         print("Syntax error at EOF")
 
-# Build the parser
 parser = yacc.yacc()
 
 def eval_expr(expr):
@@ -108,20 +117,12 @@ def eval_expr(expr):
             elif expr[0] == '-': return left - right
             elif expr[0] == '*': return left * right
             elif expr[0] == '/': return left / right
-        else:
-            return eval_expr(expr[-1])
     return expr
 
 def eval_condition(cond):
     op, left, right = cond
     left_val = eval_expr(left)
     right_val = eval_expr(right)
-    
-    if isinstance(left_val, tuple):
-        left_val = eval_expr(left_val)
-    if isinstance(right_val, tuple):
-        right_val = eval_expr(right_val)
-    
     if op == '>': return left_val > right_val
     elif op == '<': return left_val < right_val
     elif op == '==': return left_val == right_val
@@ -129,6 +130,9 @@ def eval_condition(cond):
 
 def interpret(program):
     result = None
+    if not program:
+        return result
+        
     for statement in program:
         if statement[0] == 'assign':
             variables[statement[1]] = eval_expr(statement[2])
@@ -142,6 +146,22 @@ def interpret(program):
             condition, body = statement[1], statement[2]
             while eval_condition(condition):
                 interpret(body)
+        elif statement[0] == 'si':
+            condition, body = statement[1], statement[2]
+            if eval_condition(condition):
+                interpret(body)
+        elif statement[0] == 'si_sino':
+            condition, if_body, else_body = statement[1], statement[2], statement[3]
+            if eval_condition(condition):
+                interpret(if_body)
+            else:
+                interpret(else_body)
+        elif statement[0] == 'para':
+            init, condition, step, body = statement[1], statement[2], statement[3], statement[4]
+            interpret(init)
+            while eval_condition(condition):
+                interpret(body)
+                interpret([step])
     return result
 
 # REPL
