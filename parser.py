@@ -165,13 +165,10 @@ def interpret(program):
     return result
 
 # REPL
-while True:
+def parse_and_interpret(code):
     try:
-        s = input('calc > ')
-    except EOFError:
-        break
-    if not s:
-        continue
-    result = parser.parse(s)
-    if result is not None:
-        print(interpret(result))
+        result = parser.parse(code)  # Pasa el contenido al parser
+        if result is not None:
+            return interpret(result)  # Interpreta el resultado
+    except Exception as e:
+        return f"Ocurrió un error: {e}"

@@ -1,0 +1,94 @@
+# Asignación de variables
+x = 10;
+y = 5;
+
+# Suma
+resultado = x + y;
+IMPRIMIR(resultado);  # Debería IMPRIMIR 15
+
+# Resta
+resultado = x - y;
+IMPRIMIR(resultado);  # Debería IMPRIMIR 5
+
+# Multiplicación
+resultado = x * y;
+IMPRIMIR(resultado);  # Debería IMPRIMIR 50
+
+# División
+resultado = x / y;
+IMPRIMIR(resultado);  # Debería IMPRIMIR 2.0
+
+# Incremento
+x++;
+IMPRIMIR(x);  # Debería IMPRIMIR 11
+
+# Condicional
+SI (x > y) {
+    IMPRIMIR("x es mayor que y");  # Debería IMPRIMIR esto
+} SINO {
+    IMPRIMIR("x no es mayor que y");
+};
+
+# Bucle mientras
+contador = 0;
+MIENTRAS (contador < 5) {
+    IMPRIMIR(contador);  # Debería IMPRIMIR 0, 1, 2, 3, 4
+    contador++;
+};
+
+# Bucle para
+PARA (i = 0; i < 3; i++) {
+    IMPRIMIR(i);  # Debería IMPRIMIR 0, 1, 2, 3
+};
+
+
+#RESULTADO
+15
+5
+50
+2.0
+11
+x es mayor que y
+0
+1
+2
+3
+4
+0
+1
+2
+
+
+x = 10;
+y = 5;
+
+resultado = x + y;
+IMPRIMIR(resultado);
+
+resultado = x - y;
+IMPRIMIR(resultado);  
+
+resultado = x * y;
+IMPRIMIR(resultado); 
+
+resultado = x / y;
+IMPRIMIR(resultado); 
+
+x++;
+IMPRIMIR(x);  
+
+SI (x > y) {
+    IMPRIMIR("x es mayor que y"); 
+} SINO {
+    IMPRIMIR("x no es mayor que y");
+};
+
+contador = 0;
+MIENTRAS (contador < 5) {
+    IMPRIMIR(contador);
+    contador++;
+};
+
+PARA (i = 0; i < 3; i++) {
+    IMPRIMIR(i);
+};
